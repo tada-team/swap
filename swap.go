@@ -14,6 +14,12 @@ func String(p *string, v string) func() {
 	return func() { *p = old }
 }
 
+func Strings(p *[]string, v []string) func() {
+	old := *p
+	*p = v
+	return func() { *p = old }
+}
+
 func Int(p *int, v int) func() {
 	old := *p
 	*p = v
