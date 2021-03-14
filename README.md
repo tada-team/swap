@@ -19,4 +19,13 @@ func TestWithSwap(t *testing.T) {
 	defer swap.Int(&myConfig.Bar, 42)()
 	// ...test cases...
 }
+
+// more sugar
+func TestWithSwapChain(t *testing.T) {
+    defer swap.Chain(
+    	swap.Bool(&myConfig.Foo, "test value"),
+        swap.Int(&myConfig.Bar, 42),
+    )
+    // ...test cases...
+}
 ```
