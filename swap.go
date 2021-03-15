@@ -16,6 +16,14 @@ func Bool(p *bool, v bool) func() {
 	return func() { *p = old }
 }
 
+func True(p *bool) func() {
+	return Bool(p, true)
+}
+
+func False(p *bool) func() {
+	return Bool(p, false)
+}
+
 func String(p *string, v string) func() {
 	old := *p
 	*p = v
