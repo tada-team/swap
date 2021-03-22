@@ -4,8 +4,8 @@ import "time"
 
 func Chain(fns ...func()) func() {
 	return func() {
-		for _, fn := range fns {
-			fn()
+		for i := len(fns) - 1; i > 0; i-- {
+			fns[i]()
 		}
 	}
 }
