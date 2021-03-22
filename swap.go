@@ -4,7 +4,7 @@ import "time"
 
 func Chain(fns ...func()) func() {
 	return func() {
-		for i := len(fns) - 1; i > 0; i-- {
+		for i := len(fns) - 1; i >= 0; i-- {
 			fns[i]()
 		}
 	}
