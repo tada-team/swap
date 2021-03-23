@@ -4,6 +4,14 @@ import "time"
 
 func Chain(fns ...func()) func() {
 	return func() {
+		for i := range fns {
+			fns[i]()
+		}
+	}
+}
+
+func RevChain(fns ...func()) func() {
+	return func() {
 		for i := len(fns) - 1; i >= 0; i-- {
 			fns[i]()
 		}
