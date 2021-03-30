@@ -61,3 +61,9 @@ func Duration(p *time.Duration, v time.Duration) func() {
 	*p = v
 	return func() { *p = old }
 }
+
+func Time(p *time.Time, v time.Time) func() {
+	old := *p
+	*p = v
+	return func() { *p = old }
+}
