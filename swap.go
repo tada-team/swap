@@ -127,6 +127,26 @@ func GetInt64(p *int64) int64 {
 	return *p
 }
 
+func Int32(p *int32, v int32) func() {
+	mux.Lock()
+	defer mux.Unlock()
+
+	old := *p
+	*p = v
+
+	return func() {
+		mux.Lock()
+		defer mux.Unlock()
+		*p = old
+	}
+}
+
+func GetInt32(p *int32) int32 {
+	mux.RLock()
+	defer mux.RUnlock()
+	return *p
+}
+
 func Duration(p *time.Duration, v time.Duration) func() {
 	mux.Lock()
 	defer mux.Unlock()
