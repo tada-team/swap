@@ -9,8 +9,9 @@ var myConfig struct {
 
 func init() {
 	readConfig(&myConfig)
-}
+}```
 
+```go
 // test.go
 import "github.com/tada-team/swap"
 
