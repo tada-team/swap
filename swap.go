@@ -1,9 +1,6 @@
 package swap
 
-import (
-	"sync"
-	"time"
-)
+import "sync"
 
 var mux sync.RWMutex
 
@@ -23,11 +20,11 @@ func RevChain(fns ...func()) func() {
 	}
 }
 
-func True(p *bool) func() { return Bool(p, true) }
+func True(p *bool) func() { return Value(p, true) }
 
-func False(p *bool) func() { return Bool(p, false) }
+func False(p *bool) func() { return Value(p, false) }
 
-func Bool(p *bool, v bool) func() {
+func Value[T any](p *T, v T) func() {
 	mux.Lock()
 	defer mux.Unlock()
 
@@ -41,146 +38,7 @@ func Bool(p *bool, v bool) func() {
 	}
 }
 
-func GetBool(p *bool) bool {
-	mux.RLock()
-	defer mux.RUnlock()
-	return *p
-}
-
-func String(p *string, v string) func() {
-	mux.Lock()
-	defer mux.Unlock()
-
-	old := *p
-	*p = v
-
-	return func() {
-		mux.Lock()
-		defer mux.Unlock()
-		*p = old
-	}
-}
-
-func GetString(p *string) string {
-	mux.RLock()
-	defer mux.RUnlock()
-	return *p
-}
-
-func Strings(p *[]string, v []string) func() {
-	mux.Lock()
-	defer mux.Unlock()
-
-	old := *p
-	*p = v
-
-	return func() {
-		mux.Lock()
-		defer mux.Unlock()
-		*p = old
-	}
-}
-
-func GetStrings(p *[]string) []string {
-	mux.RLock()
-	defer mux.RUnlock()
-	return *p
-}
-
-func Int(p *int, v int) func() {
-	mux.Lock()
-	defer mux.Unlock()
-
-	old := *p
-	*p = v
-
-	return func() {
-		mux.Lock()
-		defer mux.Unlock()
-		*p = old
-	}
-}
-
-func GetInt(p *int) int {
-	mux.RLock()
-	defer mux.RUnlock()
-	return *p
-}
-
-func Int64(p *int64, v int64) func() {
-	mux.Lock()
-	defer mux.Unlock()
-
-	old := *p
-	*p = v
-
-	return func() {
-		mux.Lock()
-		defer mux.Unlock()
-		*p = old
-	}
-}
-
-func GetInt64(p *int64) int64 {
-	mux.RLock()
-	defer mux.RUnlock()
-	return *p
-}
-
-func Int32(p *int32, v int32) func() {
-	mux.Lock()
-	defer mux.Unlock()
-
-	old := *p
-	*p = v
-
-	return func() {
-		mux.Lock()
-		defer mux.Unlock()
-		*p = old
-	}
-}
-
-func GetInt32(p *int32) int32 {
-	mux.RLock()
-	defer mux.RUnlock()
-	return *p
-}
-
-func Duration(p *time.Duration, v time.Duration) func() {
-	mux.Lock()
-	defer mux.Unlock()
-
-	old := *p
-	*p = v
-
-	return func() {
-		mux.Lock()
-		defer mux.Unlock()
-		*p = old
-	}
-}
-
-func GetDuration(p *time.Duration) time.Duration {
-	mux.RLock()
-	defer mux.RUnlock()
-	return *p
-}
-
-func Time(p *time.Time, v time.Time) func() {
-	mux.Lock()
-	defer mux.Unlock()
-
-	old := *p
-	*p = v
-	return func() {
-		mux.Lock()
-		defer mux.Unlock()
-		*p = old
-	}
-}
-
-func GetTime(p *time.Time) time.Time {
+func GetValue[T any](p *T) T {
 	mux.RLock()
 	defer mux.RUnlock()
 	return *p

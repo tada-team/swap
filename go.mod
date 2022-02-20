@@ -1,4 +1,3 @@
 module github.com/tada-team/swap
 
-go 1.13
-
+go 1.18

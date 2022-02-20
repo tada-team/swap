@@ -2,40 +2,28 @@ package swap
 
 import "testing"
 
-func TestChain(t *testing.T) {
-	x := 2
-	y := 3
+func TestValueAndChain(t *testing.T) {
+	someInt := 2
+	someString := "3"
+	someStrings := []string{"3"}
+	someBool := true
 
 	t.Run("defer", func(t *testing.T) {
-		if x != 2 {
-			t.Fatal("x must be 2")
+		if someInt != 2 {
+			t.Fatal("someInt must be 2")
 		}
 		defer Chain(
-			Int(&x, 10),
-			Int(&y, 20),
+			Value(&someInt, 10),
+			Value(&someString, "20"),
+			Value(&someBool, false),
+			Value(&someStrings, []string{"fff"}),
 		)()
-		if x != 10 {
-			t.Fatal("x must be 10")
+		if someInt != 10 {
+			t.Fatal("someInt must be 10")
 		}
 	})
 
-	if x != 2 {
-		t.Fatal("x must be 2")
-	}
-}
-
-func TestInt(t *testing.T) {
-	x := 2
-	t.Run("defer", func(t *testing.T) {
-		if x != 2 {
-			t.Fatal("x must be 2")
-		}
-		defer Int(&x, 10)()
-		if x != 10 {
-			t.Fatal("x must be 10")
-		}
-	})
-	if x != 2 {
-		t.Fatal("x must be 2")
+	if someInt != 2 {
+		t.Fatal("someInt must be 2")
 	}
 }
